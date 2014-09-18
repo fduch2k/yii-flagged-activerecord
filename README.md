@@ -76,7 +76,7 @@ $articles = Article::model()->withoutFlag('deleted')->findAll();
 $article = Article::model()->findByPk(10);
 // Check if article is not deleted...
 if ($article->isDeleted === false) {
-    //...then publis it
+    //...then publish it
     $article->isPublished = true;
 }
 $article->save();
@@ -89,5 +89,6 @@ echo Article::model()->getFlag('deleted'); // outputs 128
 
 ### Apply flag conditions to criteria
 ```php
+// get criteria to find not deleted article drafts
 $criteria = Article::model()->applyFlags(new CDbCriteria(), array('draft', '!deleted'));
 ```
