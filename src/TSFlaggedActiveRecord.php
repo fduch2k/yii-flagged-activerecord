@@ -37,7 +37,7 @@ abstract class TSFlaggedActiveRecord extends CActiveRecord
             $flag = $this->flagsFromText($flag);
         }
 
-        return (($this->{ $this->flagsField}&$flag) == $flag);
+        return (($this->{$this->flagsField}&$flag) == $flag);
     }
 
     public function flags()
@@ -46,6 +46,18 @@ abstract class TSFlaggedActiveRecord extends CActiveRecord
         );
     }
 
+    /**
+     * Returns the flag labels.
+     * Flag labels are mainly used in error messages of validation.
+     * By default an flag label is generated using {@link CModel::generateAttributeLabel}.
+     * This method allows you to explicitly specify flag labels.
+     *
+     * Note, in order to inherit labels defined in the parent class, a child class needs to
+     * merge the parent labels with child labels using functions like array_merge().
+     *
+     * @return array flag labels (name=>label)
+     * @see CModel::generateAttributeLabel
+     */
     public function flagLabels()
     {
         return array(
@@ -97,7 +109,7 @@ abstract class TSFlaggedActiveRecord extends CActiveRecord
 
         foreach ($flags as $value) {
             if ($this->getFlag($value)) {
-                $flagLabels[] = $this->_flagLabels[$value];
+                $flagLabels[] = isset($this->_flagLabels[$value]) ? $this->_flagLabels[$value] : $this->generateAttributeLabel($value);
             }
         }
 
@@ -111,7 +123,6 @@ abstract class TSFlaggedActiveRecord extends CActiveRecord
         if (is_string($flags)) {
             $flags = preg_split("/[,?\s]+/", trim(strtolower($flags)));
         } else {
-
             $flags = CPropertyValue::ensureArray($flags);
         }
 
@@ -177,8 +188,7 @@ abstract class TSFlaggedActiveRecord extends CActiveRecord
 
     public function withFlag($flag)
     {
-        $flags = $this->cachedFlags();
-        $flagValue = (is_string($flag)) ? $flags[trim(strtolower($flag))] : $flag;
+        $flagValue = (is_string($flag)) ? $this->flagsFromText($flag) : $flag;
 
         if ($flagValue) {
             $this->getDbCriteria()->mergeWith(array(
@@ -196,8 +206,7 @@ abstract class TSFlaggedActiveRecord extends CActiveRecord
 
     public function withoutFlag($flag)
     {
-        $flags = $this->cachedFlags();
-        $flagValue = (is_string($flag)) ? $flags[trim(strtolower($flag))] : $flag;
+        $flagValue = (is_string($flag)) ? $this->flagsFromText($flag) : $flag;
 
         if ($flagValue) {
             $this->getDbCriteria()->mergeWith(array(
