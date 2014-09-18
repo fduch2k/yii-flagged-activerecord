@@ -1,0 +1,24 @@
+{
+    "name": "fduch2k/yii-flagged-activerecord",
+    "description": "Extends CActiveRecord class to add bitflag fields operations",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Alexander Hramov",
+            "email": "alexander.hramov@gmail.com",
+            "role": "lead developer"
+        }
+    ],
+    "type": "library",
+    "keywords": ["yii", "cactiverecord", "bitmask"],
+    "license": "MIT",
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "require": {
+        "php": ">=5.1.0",
+        "yiisoft/yii": ">=1.1.8"
+    }
+}
