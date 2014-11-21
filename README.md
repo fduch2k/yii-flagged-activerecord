@@ -1,6 +1,6 @@
 # TSFlaggedActiveRecord for Yii 1.1.x
 
-Extends CActiveRecord class to add bitflag fields operations.
+Extends CActiveRecord class to add bitflag fields operations. [Changelog](#Changelog)
 
 ## Installation
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
@@ -92,3 +92,13 @@ echo Article::model()->getFlag('deleted'); // outputs 128
 // get criteria to find not deleted article drafts
 $criteria = Article::model()->applyFlags(new CDbCriteria(), array('draft', '!deleted'));
 ```
+
+## Changelog
+
+0.2.0 / 2014-11-21
+==================
+ * Overrides getAttributes and setAttributes methods to cover flag functionality
+ * Added getFlagNames method
+ * Method setFlag now can correctly work with boolean string 'true' 'false' (string that eqaul to 'true' is true othewise is false)
+ * Added osx specific files to ignore
+
