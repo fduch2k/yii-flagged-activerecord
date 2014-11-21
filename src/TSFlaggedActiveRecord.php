@@ -24,6 +24,9 @@ abstract class TSFlaggedActiveRecord extends CActiveRecord
             $flag = $this->flagsFromText($flag);
         }
 
+        if (is_string($value)) {
+            $value = strtolower($value) == 'true' ? true : false;
+        }
         if ($value) {
             $this->{ $this->flagsField} |= $flag;
         } else {
