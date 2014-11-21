@@ -189,6 +189,48 @@ abstract class TSFlaggedActiveRecord extends CActiveRecord
     }
 
     /**
+     * Sets the attribute and flags values in a massive way.
+     * @param array $values attribute values (name=>value) to be set.
+     * @param boolean $safeOnly whether the assignments should only be done to the safe attributes.
+     * A safe attribute is one that is associated with a validation rule in the current {@link scenario}.
+     * @see getSafeAttributeNames
+     * @see attributeNames
+     */
+    public function setAttributes($values, $safeOnly=true)
+    {
+        $flags = $this->cachedFlags();
+        $notFlags = array();
+        foreach ($values as $key => $val) {
+            if (array_key_exists($key, $flags)) {
+                $this->setFlag($key, $val);
+            }
+            else {
+                $notFlags[$key] = $val;
+            }
+        }
+        parent::setAttributes($notFlags, $safeOnly);
+    }
+
+    /**
+     * Returns all attribute and flags values.
+     * @param array $names list of attributes whose value needs to be returned.
+     * Defaults to null, meaning all attributes as listed in {@link attributeNames} and flags as listed in
+     * {@link flagNames} will be returned. If it is an array, only the attributes in the array will be returned.
+     * @return array attribute values (name=>value).
+     */
+    public function getAttributes($names = null) {
+        $attributes = parent::getAttributes($names);
+        if (is_array($names)) {
+            $flags = $this->cachedFlags();
+            $flagNames = array_intersect(array_keys($flags), $names);
+            foreach ($flagNames as $name) {
+                $attributes[$name] = $this->getFlag($flags[$name]);
+            }
+        }
+        return $attributes;
+    }
+
+    /**
      * Scope for select records with given flag
      * @param mixed $flag the flag value or flag name
      * @return instancetype
