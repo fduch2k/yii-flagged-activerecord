@@ -1,6 +1,6 @@
 # TSFlaggedActiveRecord for Yii 1.1.x
 
-Extends CActiveRecord class to add bitflag fields operations. [Changelog](#Changelog)
+Extends CActiveRecord class to add bitflag fields operations. [Changelog](#changelog)
 
 ## Installation
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
