@@ -49,6 +49,11 @@ abstract class TSFlaggedActiveRecord extends CActiveRecord
         );
     }
 
+    public function getFlagNames()
+    {
+        return array_keys($this->cachedFlags());
+    }
+
     /**
      * Returns the flag labels.
      * Flag labels are mainly used in error messages of validation.
