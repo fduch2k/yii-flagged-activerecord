@@ -111,7 +111,7 @@ abstract class TSFlaggedActiveRecord extends CActiveRecord
     public function flagsToText($flag = null)
     {
         $flagLabels = array();
-        $flag = is_null($flag) ? $this->{$this->flagField} : $flag;
+        $flag = is_null($flag) ? $this->{$this->flagsField} : $flag;
         $flags = $this->cachedFlags();
         if ($this->_flagLabels === null) {
             $this->_flagLabels = $this->flagLabels();
