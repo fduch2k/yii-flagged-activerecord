@@ -110,15 +110,16 @@ abstract class TSFlaggedActiveRecord extends CActiveRecord
 
     public function flagsToText($flag = null)
     {
+        $flagLabels = array();
         $flag = is_null($flag) ? $this->{$this->flagField} : $flag;
         $flags = $this->cachedFlags();
         if ($this->_flagLabels === null) {
             $this->_flagLabels = $this->flagLabels();
         }
 
-        foreach ($flags as $value) {
-            if ($flag & $value === $value) {
-                $flagLabels[] = isset($this->_flagLabels[$value]) ? $this->_flagLabels[$value] : $this->generateAttributeLabel($value);
+        foreach ($flags as $name => $value) {
+            if (($flag & $value) === $value) {
+                $flagLabels[] = isset($this->_flagLabels[$value]) ? $this->_flagLabels[$value] : $this->generateAttributeLabel($name);
             }
         }
 
