@@ -94,6 +94,14 @@ $criteria = Article::model()->applyFlags(new CDbCriteria(), array('draft', '!del
 ```
 
 ## Changelog
+###0.2.2 / 2015-07-14
+
+* Fix generating text representation of flags
+
+###0.2.1 / 2014-12-04
+
+* Add getting flag name for its value
+
 ###0.2.0 / 2014-11-21
 
  * Overrides getAttributes and setAttributes methods to cover flag functionality
